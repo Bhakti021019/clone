@@ -142,8 +142,6 @@ export default function Step1Page() {
         </div>
       </main>
     
-
-
       <style jsx>{`
         /* General styling */
         .container {
