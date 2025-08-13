@@ -1,0 +1,36 @@
+# Udyam Registration Form (Steps 1 & 2 Clone)
+
+A responsive web application that mimics the first two steps of the [Udyam Registration Portal](https://udyamregistration.gov.in/UdyamRegistration.aspx):  
+1. Aadhaar + OTP Validation  
+2. PAN Validation  
+
+This is for demonstration purposes only — no real Aadhaar/PAN verification is performed.
+
+## 🚀 Features
+- Step 1: Aadhaar Number, Name as per Aadhaar, Mobile OTP simulation  
+- Step 2: PAN Number, Name as per PAN  
+- Real-time validation for Aadhaar (12 digits) and PAN (`[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}`)  
+- Mobile-first responsive design  
+- PostgreSQL database for storing submissions  
+- REST API for backend validation and storage  
+- Unit tests for validation and API endpoints  
+- Dummy OTP 123456
+
+## 🛠️ Tech Stack
+**Frontend:** React.js / Next.js, CSS3  
+**Backend:** Node.js, Express.js, PostgreSQL (`pg` library)  
+**Testing:** Jest  
+
+## 📦 Installation
+```bash
+# Clone repository
+git clone https://github.com/your-username/udyam-form-clone.git
+cd udyam-form-clone
+
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
+npm install
