@@ -8,7 +8,8 @@ export default function Step1Page() {
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
-  const [aadhaar, setAadhaar] = useState(""); // ✅ Aadhaar state
+  const [aadhaar, setAadhaar] = useState("");
+  const [consentGiven, setConsentGiven] = useState(false); // ✅ Consent state
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtp(e.target.value);
@@ -22,10 +23,6 @@ export default function Step1Page() {
   const handleVerifyOtp = () => {
     if (otp === "123456") {
       setOtpVerified(true);
-
-      // ✅ Save Aadhaar to localStorage so Step 2 can access it
-      localStorage.setItem("aadhaar", aadhaar);
-
       alert("OTP Verified!");
       router.push("/step2");
     } else {
@@ -51,7 +48,7 @@ export default function Step1Page() {
 
           <div className="form-content">
             <div className="form-grid">
-              {/* ✅ Aadhaar Number */}
+              {/* Aadhaar Number */}
               <div className="input-group">
                 <label className="label">
                   1. Aadhaar Number / <span className="subtitle">आधार संख्या</span>
@@ -82,12 +79,40 @@ export default function Step1Page() {
               </div>
             </div>
 
-            {/* OTP Section */}
+            {/* Instructions */}
+            <ul className="instructions">
+              <li>Aadhaar number shall be required for Udyam Registration.</li>
+              <li>
+                The Aadhaar number shall be of the proprietor in the case of a proprietorship firm, of the managing partner in the case of a partnership firm, and of a karta in the case of a Hindu Undivided Family (HUF).
+              </li>
+              <li>
+                In case of a Company or a Limited Liability Partnership or a Cooperative Society or a Society or a Trust, the organisation or its authorised signatory shall provide its GSTIN (As per applicability of CGST Act 2017) and PAN along with its Aadhaar number as notified by the ministry of MSME{" "}
+                <a href="#" className="link">
+                  vide S.O. 1055(E) dated 05th March 2021
+                </a>
+                .
+              </li>
+            </ul>
+
+            {/* Consent */}
+            <div className="consent">
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={consentGiven}
+                onChange={(e) => setConsentGiven(e.target.checked)}
+              />
+              <p className="consent-text">
+                I, the holder of the above Aadhaar, hereby give my consent to Ministry of MSME, Government of India, for using my Aadhaar number as allotted by UIDAI for Udyam Registration. NIC / Ministry of MSME, Government of India, have informed me that my aadhaar data will not be stored/shared.
+              </p>
+            </div>
+
+            {/* OTP Section (Moved Below Consent) */}
             <div className="otp-section">
               <button
                 className="button"
                 onClick={handleSendOtp}
-                disabled={otpSent}
+                disabled={otpSent || !consentGiven}
               >
                 {otpSent ? "OTP Sent" : "Send OTP"}
               </button>
@@ -113,81 +138,11 @@ export default function Step1Page() {
                 </>
               )}
             </div>
-
-            {/* Instructions */}
-            <ul className="instructions">
-              <li>Aadhaar number shall be required for Udyam Registration.</li>
-              <li>
-                The Aadhaar number shall be of the proprietor in the case of a proprietorship firm, of the managing partner in the case of a partnership firm, and of a karta in the case of a Hindu Undivided Family (HUF).
-              </li>
-              <li>
-                In case of a Company or a Limited Liability Partnership or a Cooperative Society or a Society or a Trust, the organisation or its authorised signatory shall provide its GSTIN (As per applicability of CGST Act 2017) and PAN along with its Aadhaar number as notified by the ministry of MSME{" "}
-                <a href="#" className="link">
-                  vide S.O. 1055(E) dated 05th March 2021
-                </a>
-                .
-              </li>
-            </ul>
-
-            {/* Consent */}
-            <div className="consent">
-              <input type="checkbox" className="checkbox" />
-              <p className="consent-text">
-                I, the holder of the above Aadhaar, hereby give my consent to Ministry of MSME, Government of India, for using my Aadhaar number as allotted by UIDAI for Udyam Registration. NIC / Ministry of MSME, Government of India, have informed me that my aadhaar data will not be stored/shared.
-              </p>
-            </div>
-
-            {/* Submit Button */}
-            <button className="button">
-              Validate &amp; Generate OTP
-            </button>
           </div>
         </div>
       </main>
+    
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-column">
-            <h2 className="footer-title">UDYAM REGISTRATION</h2>
-            <p>Ministry of MSME</p>
-            <p>Udyog Bhawan – New Delhi</p>
-            <p><strong>Email:</strong> champions@gov.in</p>
-            <p className="footer-link">Contact Us</p>
-            <p className="footer-link">For Grievances / Problems</p>
-          </div>
-
-          <div className="footer-column">
-            <h3>Our Services</h3>
-            <ul>
-              <li>CHAMPIONS</li>
-              <li>MSME Samadhaan</li>
-              <li>MSME Sambandh</li>
-              <li>MSME Dashboard</li>
-              <li>Entrepreneurship Skill Development Programme (ESDP)</li>
-            </ul>
-          </div>
-
-          <div className="footer-column">
-            <h3>Video</h3>
-            <video width="250" controls>
-              <source src="https://www.udyamregistration.gov.in/video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-
-        <hr className="footer-divider" />
-
-        <div className="footer-bottom">
-          <p>
-            © Copyright <strong>Udyam Registration</strong>. All Rights Reserved. Website Content Managed by Ministry of Micro Small and Medium Enterprises, GoI
-          </p>
-          <p>
-            Website hosted & managed by National Informatics Centre, Ministry of Communications and IT, Government of India
-          </p>
-        </div>
-      </footer>
 
       <style jsx>{`
         /* General styling */
